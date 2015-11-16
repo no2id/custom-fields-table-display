@@ -1,26 +1,25 @@
 <?php
 /*
-Plugin Name: Custom fields display
+Plugin Name: Custom fields table display
 Plugin URI: http://wordpress.org/extend/plugins/custom-fields-display/
 Description: Custom fields display in post content.You have option to specific custom filds display in post content in any theme.
-Version: 1.1
-Author: Shambhu Prasad Patnaik
-Author URI:http://socialcms.wordpress.com/
+Version: 0.1
+Author: Adam McGreggor after Shambhu Prasad Patnaik
 */
 
 
 
-add_action('admin_menu', 'custom_fields_display_menus');
+add_action('admin_menu', 'custom_fields_table_display_menus');
 
-if (!function_exists('custom_fields_display_menus')):
-function custom_fields_display_menus()
+if (!function_exists('custom_fields_table_display_menus')):
+function custom_fields_table_display_menus()
 {
- add_menu_page('Custom Fileds Display', 'Custom Fileds Display', 8, __FILE__, 'custom_fields_display_admin_page');
+ add_menu_page('Custom Fields Table Display', 'Custom Fields Table Display', 8, __FILE__, 'custom_fields_table_display_admin_page');
 }
 endif;
 
-if (!function_exists('custom_fields_display_admin_page')):
-function custom_fields_display_admin_page()
+if (!function_exists('custom_fields_table_display_admin_page')):
+function custom_fields_table_display_admin_page()
 {
  $plugin_page= plugin_basename(__FILE__);
  $action_url=admin_url('admin.php?page='.$plugin_page);
@@ -59,24 +58,24 @@ natcasesort($keys);
   }
   $data =array('default_option' => $default_option,'select_field' =>$select_field);
   $data=json_encode($data);
-  update_option('custom_fields_display_option',$data); 
-  update_option('custom_fields_display_message','Successfully Updated.');
+  update_option('custom_fields_table_display_option',$data); 
+  update_option('custom_fields_table_display_message','Successfully Updated.');
   echo "<meta http-equiv='refresh' content='0;url=".$action_url."&message=update' />"; 
  }
  echo'<link rel="stylesheet" type="text/css" href="'.$myCsseUrl.'">';
  echo'<div class="wrap">
       <div id="icon-generic" class="icon32 "></div>      
-      <h2>Custom Fields Display</h2><br>
+      <h2>Custom Fields Table Display</h2><br>
 	  <div>';
 
-  if($custom_fields_display_message = get_option('custom_fields_display_message') && !isset($_POST['update']))
+  if($custom_fields_table_display_message = get_option('custom_fields_table_display_message') && !isset($_POST['update']))
  {
-  $custom_fields_display_message = get_option('custom_fields_display_message');
-  echo' <div class="updated_setting"><p>'.$custom_fields_display_message.'</p></div>&nbsp;';
-  update_option('custom_fields_display_message','');
+  $custom_fields_table_display_message = get_option('custom_fields_table_display_message');
+  echo' <div class="updated_setting"><p>'.$custom_fields_table_display_message.'</p></div>&nbsp;';
+  update_option('custom_fields_table_display_message','');
  }
 
- $data = json_decode(get_option('custom_fields_display_option'));
+ $data = json_decode(get_option('custom_fields_table_display_option'));
  //print_r($data);die();
  $default_option  = (array)$data->default_option;
  $default_select  = (array)$data->select_field;
@@ -133,9 +132,9 @@ echo'<div><form method="post" action="'.$action_url.'"  onsubmit="return Validat
   else 
   $field_value       = $field_id;
   if(in_array($field_id,$default_select))
-  $fild_checkbox = custom_fields_display_checkbox_field('check_box[]',$field_id, true,'', ' id="check_'.$field_id.'" '); 
+  $fild_checkbox = custom_fields_table_display_checkbox_field('check_box[]',$field_id, true,'', ' id="check_'.$field_id.'" '); 
   else
-  $fild_checkbox = custom_fields_display_checkbox_field('check_box[]',$field_id, false,'', ' id="check_'.$field_id.'" '); 
+  $fild_checkbox = custom_fields_table_display_checkbox_field('check_box[]',$field_id, false,'', ' id="check_'.$field_id.'" '); 
 
   echo '<tr id="'.$field_id.'" class="field_content" >
        <td valign="top" >'.$fild_checkbox.'</td>
@@ -154,15 +153,15 @@ echo'<div><form method="post" action="'.$action_url.'"  onsubmit="return Validat
 }
 endif;
 
-if (!function_exists('custom_fields_display_activate')):
-function custom_fields_display_activate()
+if (!function_exists('custom_fields_table_display_activate')):
+function custom_fields_table_display_activate()
 {
- update_option('custom_fields_display_option','');
+ update_option('custom_fields_table_display_option','');
 }
 endif;
 
-if (!function_exists('custom_fields_display_checkbox_field')):
-function custom_fields_display_checkbox_field($name, $value = '', $checked = false, $compare = '', $parameter = '')
+if (!function_exists('custom_fields_table_display_checkbox_field')):
+function custom_fields_table_display_checkbox_field($name, $value = '', $checked = false, $compare = '', $parameter = '')
 {
  $str = '<input type="checkbox" name="' . $name . '"';
  if ($value != '') 
@@ -183,46 +182,47 @@ function custom_fields_display_checkbox_field($name, $value = '', $checked = fal
 }
 endif;
 
-//add_action( 'init', 'custom_fields_display_init' );
-//function custom_fields_display_init()
+//add_action( 'init', 'custom_fields_table_display_init' );
+//function custom_fields_table_display_init()
 {
- add_filter( 'the_content', 'custom_fields_display_content_filter', 20 );
+ add_filter( 'the_content', 'custom_fields_table_display_content_filter', 20 );
 }
 
-register_deactivation_hook(__FILE__, 'custom_fields_display_deactivate');
-register_activation_hook(__FILE__, 'custom_fields_display_activate');
+register_deactivation_hook(__FILE__, 'custom_fields_table_display_deactivate');
+register_activation_hook(__FILE__, 'custom_fields_table_display_activate');
 
-if (!function_exists('custom_fields_display_deactivate')):
-function custom_fields_display_deactivate()
+if (!function_exists('custom_fields_table_display_deactivate')):
+function custom_fields_table_display_deactivate()
 {
- update_option('custom_fields_display_option','');
+ update_option('custom_fields_table_display_option','');
 }
 endif;
 
-if ( ! function_exists( 'custom_fields_display_content_filter' ) ) :
-function custom_fields_display_content_filter( $content )
+if ( ! function_exists( 'custom_fields_table_display_content_filter' ) ) :
+function custom_fields_table_display_content_filter( $content )
 {
  global $post;
- $data = json_decode(get_option('custom_fields_display_option'));
+ $data = json_decode(get_option('custom_fields_table_display_option'));
  $default_option  = (array)$data->default_option;
  $default_select  = (array)$data->select_field;
  $add_content='';
  if ( is_single() ):
  if(count($default_select) > 0)
  { 
-  $add_content ='<ul class=\'post-meta\'>';
+  $add_content ='<table class=\'post-meta\'>';
   foreach($default_select as $key)
   {
    $value = get_post_meta($post->ID,$key,true);
    if($value !='')
    {
-    $add_content .='<li>';
+    $add_content .='<tr>';
     if(isset($default_option[$key]) &&  $value!='' )
-    $add_content .='<span class=\'post-meta-key\'>'.esc_attr($default_option[$key]).'</span> ';
-    $add_content .=esc_attr($value).'</li>';
+    $add_content .='<td><span class=\'post-meta-key\'>'.esc_attr($default_option[$key]).'</span></td> ';
+    $add_content .='</td><td>';
+    $add_content .='<td>'.esc_attr($value).'</tr>';
    }
   }
-  $add_content .='</ul>';
+  $add_content .='</table>';
  }
  endif;
 
