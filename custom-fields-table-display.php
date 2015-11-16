@@ -2,7 +2,7 @@
 /*
 Plugin Name: Custom fields table display
 Plugin URI: http://wordpress.org/extend/plugins/custom-fields-display/
-Description: Custom fields display in post content.You have option to specific custom filds display in post content in any theme.
+Description: Display custom metadata as a table in post content. Ability to select specific custom fields; in any theme.
 Version: 0.1
 Author: Adam McGreggor after Shambhu Prasad Patnaik
 */
@@ -81,7 +81,7 @@ natcasesort($keys);
  $default_select  = (array)$data->select_field;
 ?>
  <h3 class="title">About</h3>
- <p>Custom fields display in post content.You have option to specific custom filds display in post content in any theme.</p>
+ <p>Display custom metadata as a table in post content. Ability to select specific custom fields; in any theme.</p>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 jQuery(document).ready(function(){
