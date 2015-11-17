@@ -212,14 +212,15 @@ function custom_fields_table_display_content_filter( $content )
   $add_content ='<table class=\'post-meta\'>';
   foreach($default_select as $key)
   {
-   $value = get_post_meta($post->ID,$key,true);
+   $string = get_post_meta($post->ID,$key,true);
+   $value = make_clickable( $string );
    if($value !='')
    {
     $add_content .='<tr>';
     if(isset($default_option[$key]) &&  $value!='' )
-    $add_content .='<td><span class=\'post-meta-key\'>'.esc_attr($default_option[$key]).'</span></td> ';
+    $add_content .='<td><span class=\'post-meta-key\'>'.($default_option[$key]).'</span></td> ';
     $add_content .='</td><td>';
-    $add_content .='<td>'.esc_attr($value).'</tr>';
+    $add_content .='<td>'.($value).'</tr>';
    }
   }
   $add_content .='</table>';
